@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Requests Extension - Justyna Slusarz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #FFFFFF;
+      --bg-card:  #F5F5F5;
+      --text:     #111111;
+      --muted:    #888888;
+      --border:   #E8E8E8;
+      --white:    #FFFFFF;
+      --radius:   10px;
+      --max:      800px;
+      --max-wide: 1100px;
+      --fs-body:  1.05rem;
+      --fs-lead:  1.2rem;
+      --fs-h2:    clamp(1.9rem, 3.5vw, 2.6rem);
+      --fs-h3:    1.25rem;
+      --fs-hero:  clamp(2.8rem, 5vw, 4.2rem);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: var(--fs-body);
+      line-height: 1.75;
+    }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 56px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo a {
+      font-weight: 300;
+      font-size: 0.85rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.18em;
+      text-transform: lowercase;
+    }
+
+    nav { display: flex; align-items: center; gap: 36px; }
+
+    nav a {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: opacity 0.2s;
+    }
+
+    nav a:hover { opacity: 0.5; }
+
+    .nav-contact {
+      background: var(--text);
+      color: var(--white) !important;
+      padding: 9px 22px;
+      border-radius: 100px;
+      opacity: 1 !important;
+    }
+
+    .nav-contact:hover { background: #333 !important; opacity: 1 !important; }
+
+    /* CONTENT */
+    .cs-wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .cs-wrap-wide {
+      max-width: var(--max-wide);
+      margin: 0 auto;
+      padding: 0 56px;
+    }
+
+    /* HERO */
+    .cs-hero { padding-top: 140px; padding-bottom: 80px; }
+
+    .cs-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .cs-hero h1 {
+      font-size: var(--fs-hero);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 28px;
+    }
+
+    .cs-hero-desc {
+      font-size: var(--fs-lead);
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 600px;
+      line-height: 1.8;
+      margin-bottom: 56px;
+    }
+
+    /* META */
+    .cs-meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 80px;
+    }
+
+    .cs-meta-item {
+      padding: 24px 0;
+      border-right: 1px solid var(--border);
+    }
+
+    .cs-meta-item:last-child { border-right: none; }
+
+    .cs-section .cs-meta { border-top: none; border-bottom: none; margin-bottom: 0; margin-top: 32px; }
+    .cs-section .cs-meta .cs-meta-item { padding: 14px 0; }
+
+    .cs-meta-label {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .cs-meta-value {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* IMAGE PLACEHOLDER */
+    .img-placeholder {
+      width: 100%;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+
+    .img-placeholder.full   { height: 500px; }
+    .img-placeholder.medium { height: 380px; }
+    .img-placeholder.sketch { height: 440px; }
+    .img-placeholder.ia     { height: 320px; }
+
+    /* SECTIONS */
+    .cs-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .cs-section:first-of-type { border-top: none; }
+
+    .cs-section-label {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .cs-section h2 {
+      font-size: var(--fs-h2);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 32px;
+      color: var(--text);
+    }
+
+    .cs-section p {
+      font-size: var(--fs-body);
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.85;
+      margin-bottom: 20px;
+      max-width: 640px;
+    }
+
+    .cs-section p:last-child { margin-bottom: 0; }
+    .cs-section p strong { color: var(--text); font-weight: 700; }
+
+    /* UI STACK */
+    .ui-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .ui-figure { margin: 0; }
+
+    .ui-figure img {
+      width: 100%;
+      border-radius: var(--radius);
+      display: block;
+    }
+
+    .ui-figure figcaption {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 400;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    /* GREY BAND */
+    .cs-grey-band {
+      background: var(--bg-card);
+      width: 100%;
+      padding: 72px 0;
+    }
+
+    .cs-grey-band .cs-wrap-wide { padding: 0 56px; }
+
+    /* NEXT PROJECT */
+    .cs-next {
+      padding: 100px 0 80px;
+      border-top: 1px solid var(--border);
+    }
+
+    .cs-next-label {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .cs-next a {
+      display: inline-block;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 2px solid var(--text);
+      padding-bottom: 4px;
+      transition: opacity 0.2s;
+    }
+
+    .cs-next a:hover { opacity: 0.5; }
+
+    /* FOOTER */
+    footer {
+      background: var(--text);
+      padding: 28px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p { font-size: 0.8rem; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; font-weight: 300; }
+
+    @media (max-width: 768px) {
+      header { padding: 0 24px; }
+      nav a:not(.nav-contact) { display: none; }
+      .cs-wrap { padding: 0 24px; }
+      .cs-wrap-wide { padding: 0 24px; }
+      .cs-grey-band .cs-wrap-wide { padding: 0 24px; }
+      .cs-grey-band { padding: 48px 0; }
+      .cs-meta { grid-template-columns: 1fr 1fr; }
+      .cs-meta-item { border-right: none; border-bottom: 1px solid var(--border); }
+      footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo"><a href="index.html">justyna slusarz</a></div>
+    <nav>
+      <a href="index.html#home">Home</a>
+      <a href="index.html#portfolio">Portfolio</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact" class="nav-contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <div class="cs-hero cs-wrap">
+    <span class="cs-eyebrow">App for Jira · UX/UI Design</span>
+    <h1>My Requests Extension</h1>
+    <p class="cs-hero-desc">A redesign and feature extension of a Jira app that lets users track, filter and manage all their service requests in one place - without navigating standard Jira queues or losing context across projects.</p>
+  </div>
+
+  <!-- HERO IMAGE -->
+  <div class="cs-wrap-wide" style="padding-bottom: 0;">
+    <img src="cs-mr-hero.png" alt="My Requests Extension - hero mockup" style="width:100%;border-radius:var(--radius);display:block;" />
+  </div>
+
+  <!-- BEFORE REDESIGN -->
+  <div class="cs-grey-band">
+    <div class="cs-wrap" style="padding-bottom: 48px;">
+      <div class="cs-section" style="border-top: none; padding-bottom: 48px;">
+        <span class="cs-section-label">Starting point</span>
+        <h2>Before redesign</h2>
+        <p>The original app gave users a basic list of their Jira requests - but nothing more. No filtering, no sorting by project or status, no way to search by keyword. Users had to scroll through long lists manually, often losing track of critical items. The interface was functional but had not kept pace with how users actually worked.</p>
+      </div>
+    </div>
+    <div class="cs-wrap-wide">
+      <img src="cs-mr-before.png" alt="My Requests Extension - before redesign" style="width:100%;border-radius:var(--radius);display:block;" />
+    </div>
+  </div>
+
+  <!-- ISSUE -->
+  <div class="cs-wrap">
+    <div class="cs-section">
+      <span class="cs-section-label">The problem</span>
+      <h2>Issue</h2>
+      <p>Redesign including <strong>new functionalities</strong> to the existing application for Jira to prevent users from having to search for their requests in standard Jira queues based on tags. The goal was to make request management faster, more structured, and accessible to users without deep Jira knowledge.</p>
+      <p>The app needed to evolve from a passive list viewer into an active request management tool - one that could handle approvals, allow filtering across multiple parameters, and present information in a way that matched the mental model of the people using it every day.</p>
+      <div class="cs-meta" style="margin-top: 48px;">
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Role</span>
+          <span class="cs-meta-value">Lead UX/UI Designer</span>
+        </div>
+        <div class="cs-meta-item" style="padding-left: 32px;">
+          <span class="cs-meta-label">Scope</span>
+          <span class="cs-meta-value">Research · UX · UI</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHAT WAS MISSING -->
+    <div class="cs-section">
+      <span class="cs-section-label">Gap analysis</span>
+      <h2>What was missing?</h2>
+      <p>I started with a review of the existing interface - annotating where users were getting stuck and what functionality was entirely absent. The sketch below captures the key gaps identified through user feedback and session observations before any design work began.</p>
+    </div>
+  </div>
+
+  <!-- SKETCH -->
+  <div class="cs-wrap-wide" style="padding-bottom: 80px;">
+    <img src="cs-mr-sketch.png" alt="What was missing - hand sketch with annotations" style="width:100%;border-radius:var(--radius);display:block;" />
+  </div>
+
+  <!-- INFORMATION ARCHITECTURE -->
+  <div class="cs-wrap">
+    <div class="cs-section">
+      <span class="cs-section-label">Structure</span>
+      <h2>Information architecture</h2>
+      <p>Before jumping to screens, I mapped the full information architecture of the redesigned app. The new structure introduced a clearer navigation model - separating Requests from Approvals and adding a dedicated help entry point - while keeping the customer's context always visible at the top level.</p>
+    </div>
+  </div>
+
+  <div class="cs-wrap-wide" style="padding-bottom: 80px;">
+    <img src="cs-mr-ia.png" alt="Information architecture diagram" style="width:100%;border-radius:var(--radius);display:block;" />
+  </div>
+
+  <!-- USER INTERFACE -->
+  <div class="cs-grey-band">
+    <div class="cs-wrap" style="padding-bottom: 56px;">
+      <div class="cs-section" style="border-top: none;">
+        <span class="cs-section-label">The solution</span>
+        <h2>User Interface</h2>
+        <p>The redesigned app introduced a fully searchable, filterable request list with grouping by project, status and type. Users could now manage approvals directly from the same view, access request details without leaving the app, and configure their own column preferences.</p>
+        <p>The new interface was built around <strong>progressive disclosure</strong> - showing only what users needed at each step, while keeping advanced filtering and configuration accessible without cluttering the main view.</p>
+      </div>
+    </div>
+    <div class="cs-wrap-wide">
+      <div class="ui-stack">
+        <figure class="ui-figure">
+          <img src="cs-mr-ui-1.png" alt="Request list with filters" style="width:100%;border-radius:var(--radius);display:block;" />
+        </figure>
+        <figure class="ui-figure">
+          <img src="cs-mr-ui-2.png" alt="Filter and column configuration" style="width:100%;border-radius:var(--radius);display:block;" />
+        </figure>
+        <figure class="ui-figure">
+          <img src="cs-mr-ui-3.png" alt="Request detail" style="width:100%;border-radius:var(--radius);display:block;" />
+        </figure>
+        <figure class="ui-figure">
+          <img src="cs-mr-ui-4.png" alt="Approvals" style="width:100%;border-radius:var(--radius);display:block;" />
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="cs-wrap">
+    <div class="cs-section">
+      <span class="cs-section-label">Impact</span>
+      <h2>Results</h2>
+      <p>The redesigned My Requests Extension replaced a passive list with a fully functional request management workspace. Users no longer needed to navigate Jira's native queue system or use workarounds to track their own submissions across projects.</p>
+      <p>The addition of approval management within the same view was particularly well received - it reduced context switching for users who frequently needed to act on both submitted requests and pending approvals. The new column configuration feature became one of the most-used settings, reflecting how differently teams across organizations structure their Jira workflows.</p>
+    </div>
+
+    <!-- NEXT -->
+    <div class="cs-next">
+      <span class="cs-next-label">Back to first project</span>
+      <a href="case-study-theme-extension.html">Theme Extension -&gt;</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 Justyna Slusarz</p>
+    <p>Senior UX/UI Designer - Atlassian Marketplace</p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BigPicture Onboarding - Justyna Ślusarz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #FFFFFF;
+      --bg-card: #F5F5F5;
+      --text:    #111111;
+      --muted:   #888888;
+      --border:  #E8E8E8;
+      --white:   #FFFFFF;
+      --radius:  10px;
+      --max:     800px;
+      --max-wide: 1100px;
+      --fs-body: 1.05rem;
+      --fs-lead: 1.2rem;
+      --fs-h2:   clamp(1.9rem, 3.5vw, 2.6rem);
+      --fs-h3:   1.25rem;
+      --fs-hero: clamp(2.8rem, 5vw, 4.2rem);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: var(--fs-body);
+      line-height: 1.75;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 56px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo a {
+      font-weight: 300;
+      font-size: 0.85rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.18em;
+      text-transform: lowercase;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+
+    nav a {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: opacity 0.2s;
+    }
+
+    nav a:hover { opacity: 0.5; }
+
+    .nav-contact {
+      background: var(--text);
+      color: var(--white) !important;
+      padding: 9px 22px;
+      border-radius: 100px;
+      opacity: 1 !important;
+    }
+
+    .nav-contact:hover {
+      background: #333 !important;
+      opacity: 1 !important;
+    }
+
+    /* ── CONTENT ── */
+    .cs-wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .cs-wrap-wide {
+      max-width: var(--max-wide);
+      margin: 0 auto;
+      padding: 0 56px;
+    }
+
+    /* ── HERO ── */
+    .cs-hero {
+      padding-top: 140px;
+      padding-bottom: 80px;
+    }
+
+    .cs-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .cs-hero h1 {
+      font-size: var(--fs-hero);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 28px;
+    }
+
+    .cs-hero-desc {
+      font-size: var(--fs-lead);
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 600px;
+      line-height: 1.8;
+      margin-bottom: 56px;
+    }
+
+    /* ── META ── */
+    .cs-meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 80px;
+    }
+
+    .cs-meta-item {
+      padding: 24px 0;
+      border-right: 1px solid var(--border);
+    }
+
+    .cs-meta-item:last-child { border-right: none; }
+
+    .cs-section .cs-meta { border-top: none; border-bottom: none; margin-bottom: 0; margin-top: 32px; }
+    .cs-section .cs-meta .cs-meta-item { padding: 14px 0; }
+
+    .cs-meta-label {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .cs-meta-value {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* ── IMAGE PLACEHOLDER ── */
+    .img-placeholder {
+      width: 100%;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+
+    .img-placeholder.full { height: 500px; }
+    .img-placeholder.medium { height: 380px; }
+
+    /* ── SECTIONS ── */
+    .cs-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .cs-section:first-of-type { border-top: none; }
+
+    .cs-section-label {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .cs-section h2 {
+      font-size: var(--fs-h2);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 32px;
+      color: var(--text);
+    }
+
+    .cs-section p {
+      font-size: var(--fs-body);
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.85;
+      margin-bottom: 20px;
+      max-width: 640px;
+    }
+
+    .cs-section p:last-child { margin-bottom: 0; }
+
+    .cs-section p strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    /* ── FINDINGS GRID ── */
+    .findings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-top: 48px;
+    }
+
+    .finding-item {
+      background: var(--bg);
+      padding: 36px;
+    }
+
+    .finding-num {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .finding-item h3 {
+      font-size: var(--fs-h3);
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .finding-item p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.7;
+      max-width: 100%;
+    }
+
+    /* ── USER STORIES ── */
+    .stories-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 48px;
+    }
+
+    .story-item {
+      padding: 36px 0;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .story-role {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text);
+      padding-top: 4px;
+    }
+
+    .story-quote {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.8;
+      font-style: italic;
+    }
+
+    .story-quote::before {
+      content: '"';
+      font-size: 1.6rem;
+      font-weight: 900;
+      line-height: 0;
+      vertical-align: -0.3em;
+      margin-right: 4px;
+      color: var(--border);
+    }
+
+    /* ── SOLUTION STEPS ── */
+    .solution-flow {
+      display: flex;
+      align-items: flex-start;
+      margin-top: 64px;
+      margin-bottom: 20px;
+      position: relative;
+      width: 100%;
+    }
+
+    .step-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      margin-top: 35px;
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+
+    .step-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 72px;
+      flex-shrink: 0;
+    }
+
+    .step-circle {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 1.5px solid var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      position: relative;
+      z-index: 1;
+      margin-bottom: 20px;
+      color: var(--text);
+      flex-shrink: 0;
+    }
+
+    .step-circle svg {
+      width: 26px;
+      height: 26px;
+      stroke: var(--text);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .step-label {
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      width: 110px;
+      margin-left: -19px;
+      line-height: 1.3;
+    }
+
+    /* ── UI STACK ── */
+    .ui-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .ui-figure {
+      margin: 0;
+    }
+
+    .ui-figure img {
+      width: 100%;
+      border-radius: var(--radius);
+      display: block;
+    }
+
+    .ui-figure figcaption {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 400;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    /* ── GREY BAND ── */
+    .cs-grey-band {
+      background: var(--bg-card);
+      width: 100%;
+      padding: 72px 0;
+    }
+
+    .cs-grey-band .cs-wrap-wide {
+      padding: 0 56px;
+    }
+
+    /* ── NEXT PROJECT ── */
+    .cs-next {
+      padding: 100px 0 80px;
+      border-top: 1px solid var(--border);
+    }
+
+    .cs-next-label {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .cs-next a {
+      display: inline-block;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 2px solid var(--text);
+      padding-bottom: 4px;
+      transition: opacity 0.2s;
+    }
+
+    .cs-next a:hover { opacity: 0.5; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text);
+      padding: 28px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p { font-size: 0.8rem; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; font-weight: 300; }
+
+    @media (max-width: 768px) {
+      header { padding: 0 24px; }
+      nav a:not(.nav-contact) { display: none; }
+      .cs-wrap { padding: 0 24px; }
+      .cs-wrap-wide { padding: 0 24px; }
+      .cs-grey-band .cs-wrap-wide { padding: 0 24px; }
+      .cs-grey-band { padding: 48px 0; }
+      .cs-meta { grid-template-columns: 1fr 1fr; }
+      .cs-meta-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .findings-grid { grid-template-columns: 1fr; }
+      .story-item { grid-template-columns: 1fr; gap: 12px; }
+      .solution-steps { grid-template-columns: 1fr 1fr; }
+      footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo"><a href="index.html">justyna ślusarz</a></div>
+    <nav>
+      <a href="index.html#home">Home</a>
+      <a href="index.html#portfolio">Portfolio</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact" class="nav-contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <div class="cs-hero cs-wrap">
+    <span class="cs-eyebrow">App for Jira · UX/UI Design</span>
+    <h1>BigPicture Onboarding</h1>
+    <p class="cs-hero-desc">A structured onboarding flow designed to guide new BigPicture users through their first essential configuration steps - reducing drop-off and time to value for one of the most powerful portfolio management tools in the Atlassian ecosystem.</p>
+  </div>
+
+  <!-- HERO IMAGE -->
+  <div class="cs-grey-band">
+    <div class="cs-wrap-wide">
+      <img src="cs-bp-hero.png" alt="BigPicture - hero" style="width:100%;border-radius:var(--radius);display:block;" />
+    </div>
+  </div>
+
+  <!-- ISSUE -->
+  <div class="cs-wrap">
+    <div class="cs-section">
+      <span class="cs-section-label">The problem</span>
+      <h2>Issue</h2>
+      <p>BigPicture is one of the most feature-rich project portfolio management tools available for Jira - but that power comes at a cost. New users landing in the app for the first time faced a blank canvas with no clear starting point. Without guidance, most of them either abandoned setup mid-way or required heavy support from their IT team to get started.</p>
+      <p>There was no onboarding flow at all. Users were expected to figure out the configuration on their own - including Jira sync settings, team access, and program structure - before they could experience any real value from the product. <strong>The gap between sign-up and first meaningful use was too wide.</strong></p>
+      <div class="cs-meta" style="margin-top: 48px;">
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Role</span>
+          <span class="cs-meta-value">Lead UX/UI Designer</span>
+        </div>
+        <div class="cs-meta-item" style="padding-left: 32px;">
+          <span class="cs-meta-label">Scope</span>
+          <span class="cs-meta-value">Research · UX · UI</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESEARCH -->
+    <div class="cs-section">
+      <span class="cs-section-label">Discovery</span>
+      <h2>Research</h2>
+      <p>I started by reviewing support tickets and customer success logs to understand where users were getting stuck most often. I then conducted in-depth interviews with first-time users across different company sizes and roles - from project managers to IT admins - to map the mental models they brought into the product.</p>
+      <p>Session recordings showed that the majority of new users spent their first minutes clicking around without a clear goal, often ending up in advanced configuration screens they weren't ready for. The research also revealed that <strong>users came from very different backgrounds</strong> - some were migrating from other tools, some were Jira power-users, and some were setting up portfolio management for the very first time.</p>
+    </div>
+
+    <!-- FINDINGS -->
+    <div class="cs-section">
+      <span class="cs-section-label">What we learned</span>
+      <h2>Findings</h2>
+      <p>The research pointed to a consistent pattern: the problem wasn't the product's functionality - it was the absence of any structured path into it.</p>
+
+      <div class="findings-grid">
+        <div class="finding-item">
+          <span class="finding-num">01</span>
+          <h3>No clear entry point</h3>
+          <p>Users didn't know what to do first. The product opened into a full interface with no indication of recommended first steps or what a complete setup looked like.</p>
+        </div>
+        <div class="finding-item">
+          <span class="finding-num">02</span>
+          <h3>One size doesn't fit all</h3>
+          <p>Different user types needed different starting configurations. A solo project manager and an enterprise admin had almost no overlap in their initial setup needs.</p>
+        </div>
+        <div class="finding-item">
+          <span class="finding-num">03</span>
+          <h3>Jira sync is the biggest blocker</h3>
+          <p>The connection between BigPicture and Jira projects was the most critical - and most confusing - step. Users who got it wrong early had to restart their entire setup.</p>
+        </div>
+        <div class="finding-item">
+          <span class="finding-num">04</span>
+          <h3>Early wins drive retention</h3>
+          <p>Users who reached a working program view within their first session were significantly more likely to continue using the product. The goal was to get them there faster.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- USER STORIES -->
+    <div class="cs-section">
+      <span class="cs-section-label">Who we designed for</span>
+      <h2>User stories</h2>
+      <p>Three distinct user types entered BigPicture with very different expectations and technical backgrounds. The onboarding had to adapt to all of them without becoming a one-size-fits-all compromise.</p>
+
+      <div class="stories-list">
+        <div class="story-item">
+          <span class="story-role">Project Manager</span>
+          <span class="story-quote">I want to see all my Jira projects in one view right away. I don't care about advanced settings - just show me the big picture and let me start planning.</span>
+        </div>
+        <div class="story-item">
+          <span class="story-role">IT Administrator</span>
+          <span class="story-quote">I need to configure BigPicture for the whole team before they can use it. I want to set up Jira sync and access permissions correctly the first time, without going back and forth.</span>
+        </div>
+        <div class="story-item">
+          <span class="story-role">Team Lead</span>
+          <span class="story-quote">I've used BigPicture before at a different company, but the settings here are completely different. I just want to get through the setup quickly so I can actually use the tool.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOLUTION - białe tło -->
+  <div class="cs-wrap">
+    <div class="cs-section">
+      <span class="cs-section-label">The approach</span>
+      <h2>Solution</h2>
+      <p>Rather than overwhelming users with a comprehensive setup wizard, I designed a <strong>lightweight, role-aware onboarding flow</strong> that asked users just enough to personalise their experience - then guided them through only the steps that mattered for their role.</p>
+      <p>The flow consisted of four steps: a warm welcome screen, a short profiling survey to understand the user's context, a focused configuration step for the most critical settings, and a clear path to their first working view in BigPicture. Each step was designed to feel like progress - not a form.</p>
+
+      <div class="solution-flow">
+        <div class="step-item">
+          <div class="step-circle">
+            <svg viewBox="0 0 24 24"><path d="M7 11V5.5a1.5 1.5 0 0 1 3 0V11"/><path d="M10 10.5V4a1.5 1.5 0 0 1 3 0v6.5"/><path d="M13 9.5V6a1.5 1.5 0 0 1 3 0v5"/><path d="M7 11c0 0-2.5 1-2.5 4.5S7 21 12 21s7.5-2.5 7.5-6V9.5a1.5 1.5 0 0 0-3 0V11"/></svg>
+          </div>
+          <span class="step-label">Welcome</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-item">
+          <div class="step-circle">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c0-4 3.4-7 7.5-7s7.5 3 7.5 7"/></svg>
+          </div>
+          <span class="step-label">Who are you?</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-item">
+          <div class="step-circle">
+            <svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="6" r="2" fill="white"/><circle cx="16" cy="12" r="2" fill="white"/><circle cx="10" cy="18" r="2" fill="white"/></svg>
+          </div>
+          <span class="step-label">Set important things</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-item">
+          <div class="step-circle">
+            <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+          </div>
+          <span class="step-label">Start working</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- USER INTERFACE -->
+  <div class="cs-grey-band">
+    <div class="cs-wrap" style="padding-bottom: 56px;">
+      <div class="cs-section" style="border-top: none;">
+        <span class="cs-section-label">The solution</span>
+        <h2>User Interface</h2>
+        <p>The final design used a <strong>step-by-step modal flow</strong> that launched automatically on first login. Each screen had a single focus - one question, one action, one decision. Progress was visible throughout, and users could always skip ahead if they preferred to explore on their own.</p>
+        <p>The profiling step used a short survey to segment users by role and use case. Based on their answers, the configuration step surfaced only the most relevant settings - for most users, that meant connecting their Jira projects and setting up basic access. The final screen confirmed their setup was complete and opened their first program view.</p>
+      </div>
+    </div>
+    <div class="cs-wrap-wide">
+      <div class="ui-stack">
+        <figure class="ui-figure">
+          <img src="cs-bp-ui-welcome.png" alt="Welcome screen" style="width:100%;border-radius:var(--radius);display:block;" />
+          <figcaption>Welcome screen</figcaption>
+        </figure>
+        <figure class="ui-figure">
+          <img src="cs-bp-ui-survey.png" alt="Profiling survey" style="width:100%;border-radius:var(--radius);display:block;" />
+          <figcaption>Profiling survey - who are you?</figcaption>
+        </figure>
+        <figure class="ui-figure">
+          <img src="cs-bp-ui-sync.png" alt="Jira sync configuration" style="width:100%;border-radius:var(--radius);display:block;" />
+          <figcaption>Jira sync &amp; essential configuration</figcaption>
+        </figure>
+        <figure class="ui-figure">
+          <img src="cs-bp-ui-access.png" alt="Access and team setup" style="width:100%;border-radius:var(--radius);display:block;" />
+          <figcaption>Access &amp; team setup</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="cs-wrap">
+    <div class="cs-section">
+      <span class="cs-section-label">Impact</span>
+      <h2>Results</h2>
+      <p>The structured onboarding flow significantly reduced the time users needed to reach their first working program view. Support tickets related to initial setup dropped noticeably after the release, and session data showed that users who completed the onboarding were more likely to return and engage with advanced features within the first week.</p>
+      <p>The role-based profiling step proved especially effective - by tailoring the configuration experience to the user's context, we eliminated most of the irrelevant setup steps that previously caused confusion and drop-off. The onboarding became the <strong>fastest path from sign-up to real value</strong> the product had ever offered.</p>
+    </div>
+
+    <!-- NEXT -->
+    <div class="cs-next">
+      <span class="cs-next-label">Next project</span>
+      <a href="case-study-servicenow.html">Jira × ServiceNow Sync →</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Justyna Ślusarz</p>
+    <p>Senior UX/UI Designer · Atlassian Marketplace</p>
+  </footer>
+
+</body>
+</html>

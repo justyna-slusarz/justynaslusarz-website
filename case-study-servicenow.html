@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jira Cloud + ServiceNow Sync - Justyna Slusarz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #FFFFFF;
+      --bg-card: #F5F5F5;
+      --text:    #111111;
+      --muted:   #888888;
+      --border:  #E8E8E8;
+      --white:   #FFFFFF;
+      --radius:  10px;
+      --max:     800px;
+      --max-wide: 1100px;
+      --fs-body: 1.05rem;
+      --fs-lead: 1.2rem;
+      --fs-h2:   clamp(1.9rem, 3.5vw, 2.6rem);
+      --fs-h3:   1.25rem;
+      --fs-hero: clamp(2.8rem, 5vw, 4.2rem);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: var(--fs-body);
+      line-height: 1.75;
+    }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 56px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo a {
+      font-weight: 300;
+      font-size: 0.85rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.18em;
+      text-transform: lowercase;
+    }
+
+    nav { display: flex; align-items: center; gap: 36px; }
+
+    nav a {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: opacity 0.2s;
+    }
+
+    nav a:hover { opacity: 0.5; }
+
+    .nav-contact {
+      background: var(--text);
+      color: var(--white) !important;
+      padding: 9px 22px;
+      border-radius: 100px;
+      opacity: 1 !important;
+    }
+
+    .nav-contact:hover { background: #333 !important; opacity: 1 !important; }
+
+    /* CONTENT */
+    .cs-wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .cs-wrap-wide {
+      max-width: var(--max-wide);
+      margin: 0 auto;
+      padding: 0 56px;
+    }
+
+    /* HERO */
+    .cs-hero { padding-top: 140px; padding-bottom: 80px; }
+
+    .cs-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .cs-hero h1 {
+      font-size: var(--fs-hero);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 28px;
+    }
+
+    .cs-hero-desc {
+      font-size: var(--fs-lead);
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 600px;
+      line-height: 1.8;
+      margin-bottom: 56px;
+    }
+
+    /* META */
+    .cs-meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 80px;
+    }
+
+    .cs-meta-item {
+      padding: 24px 0;
+      border-right: 1px solid var(--border);
+    }
+
+    .cs-meta-item:last-child { border-right: none; }
+
+    .cs-section .cs-meta { border-top: none; border-bottom: none; margin-bottom: 0; margin-top: 32px; }
+    .cs-section .cs-meta .cs-meta-item { padding: 14px 0; }
+
+    .cs-meta-label {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .cs-meta-value {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* IMAGE PLACEHOLDER */
+    .img-placeholder {
+      width: 100%;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+
+    .img-placeholder.full { height: 500px; }
+    .img-placeholder.medium { height: 380px; }
+    .img-placeholder.flow { height: 600px; }
+
+    /* SECTIONS */
+    .cs-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .cs-section:first-of-type { border-top: none; }
+
+    .cs-section-label {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .cs-section h2 {
+      font-size: var(--fs-h2);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 32px;
+      color: var(--text);
+    }
+
+    .cs-section p {
+      font-size: var(--fs-body);
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.85;
+      margin-bottom: 20px;
+      max-width: 640px;
+    }
+
+    .cs-section p:last-child { margin-bottom: 0; }
+    .cs-section p strong { color: var(--text); font-weight: 700; }
+
+    /* PLATFORM BRIDGE */
+    .platform-bridge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      padding: 72px 0;
+    }
+
+    .platform-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .platform-logo img {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+
+    .platform-name {
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .bridge-arrow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .bridge-line {
+      width: 80px;
+      height: 1.5px;
+      background: var(--border);
+    }
+
+    .bridge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text);
+      flex-shrink: 0;
+    }
+
+    /* FINDINGS */
+    .findings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-top: 48px;
+    }
+
+    .finding-item { background: var(--bg); padding: 36px; }
+
+    .finding-num {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .finding-item h3 {
+      font-size: var(--fs-h3);
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .finding-item p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.7;
+      max-width: 100%;
+    }
+
+    /* USER STORIES */
+    .stories-list {
+      display: flex;
+      flex-direction: column;
+      margin-top: 48px;
+    }
+
+    .story-item {
+      padding: 36px 0;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .story-role {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text);
+      padding-top: 4px;
+    }
+
+    .story-quote {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.8;
+      font-style: italic;
+    }
+
+    .story-quote::before {
+      content: '"';
+      font-size: 1.6rem;
+      font-weight: 900;
+      line-height: 0;
+      vertical-align: -0.3em;
+      margin-right: 4px;
+      color: var(--border);
+    }
+
+    /* UI STACK */
+    .ui-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .ui-figure { margin: 0; }
+
+    .ui-figure img {
+      width: 100%;
+      border-radius: var(--radius);
+      display: block;
+    }
+
+    .ui-figure figcaption {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 400;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    /* GREY BAND */
+    .cs-grey-band {
+      background: var(--bg-card);
+      width: 100%;
+      padding: 72px 0;
+    }
+
+    .cs-grey-band .cs-wrap-wide { padding: 0 56px; }
+
+    /* NEXT PROJECT */
+    .cs-next {
+      padding: 100px 0 80px;
+      border-top: 1px solid var(--border);
+    }
+
+    .cs-next-label {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .cs-next a {
+      display: inline-block;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 2px solid var(--text);
+      padding-bottom: 4px;
+      transition: opacity 0.2s;
+    }
+
+    .cs-next a:hover { opacity: 0.5; }
+
+    /* FOOTER */
+    footer {
+      background: var(--text);
+      padding: 28px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p { font-size: 0.8rem; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; font-weight: 300; }
+
+    @media (max-width: 768px) {
+      header { padding: 0 24px; }
+      nav a:not(.nav-contact) { display: none; }
+      .cs-wrap { padding: 0 24px; }
+      .cs-wrap-wide { padding: 0 24px; }
+      .cs-grey-band .cs-wrap-wide { padding: 0 24px; }
+      .cs-grey-band { padding: 48px 0; }
+      .cs-meta { grid-template-columns: 1fr 1fr; }
+      .cs-meta-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .findings-grid { grid-template-columns: 1fr; }
+      .story-item { grid-template-columns: 1fr; gap: 12px; }
+      .platform-bridge { flex-direction: column; gap: 24px; }
+      .bridge-line { width: 0; height: 40px; }
+      footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo"><a href="index.html">justyna slusarz</a></div>
+    <nav>
+      <a href="index.html#home">Home</a>
+      <a href="index.html#portfolio">Portfolio</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact" class="nav-contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <div class="cs-hero cs-wrap">
+    <span class="cs-eyebrow">App for Jira · UX/UI Design</span>
+    <h1>Jira Cloud + ServiceNow Sync</h1>
+    <p class="cs-hero-desc">A cross-platform integration that enables seamless two-way synchronisation of issues between Jira Cloud and ServiceNow - eliminating duplicate work and keeping both teams aligned in real time.</p>
+  </div>
+
+  <!-- HERO IMAGE -->
+  <div class="cs-wrap-wide" style="padding-bottom: 0;">
+    <img src="cs-sn-hero.png" alt="Jira Cloud + ServiceNow Sync - hero" style="width:100%;border-radius:var(--radius);display:block;" />
+  </div>
+
+  <!-- ISSUE -->
+  <div class="cs-wrap">
+    <div class="cs-section">
+      <span class="cs-section-label">The problem</span>
+      <h2>Issue</h2>
+      <p>Enterprises running both Jira Cloud and ServiceNow faced a painful daily reality: the same issue had to live in two places at once. Support teams logged tickets in ServiceNow, while development teams tracked work in Jira. Without a sync layer, updates made in one platform never reached the other - leading to duplicated effort, missed status changes, and constant manual reconciliation across teams.</p>
+      <p>The absence of a reliable integration forced teams to rely on workarounds: spreadsheets, copy-pasted updates, and fragile Zapier automations that broke under edge cases. <strong>The cost wasn't just time - it was trust between teams.</strong> When engineers and support agents operated from different versions of the same ticket, handoffs fell apart and customers waited longer for resolution.</p>
+      <div class="cs-meta" style="margin-top: 48px;">
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Role</span>
+          <span class="cs-meta-value">Senior UX/UI Designer</span>
+        </div>
+        <div class="cs-meta-item" style="padding-left: 32px;">
+          <span class="cs-meta-label">Scope</span>
+          <span class="cs-meta-value">Research · UX · UI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLATFORM VISUAL -->
+  <div class="cs-wrap-wide" style="border-top: 1px solid var(--border); padding-bottom: 0;">
+    <div class="platform-bridge">
+      <img src="cs-sn-platforms.png" alt="Jira and ServiceNow" style="height:64px;width:auto;display:block;" />
+    </div>
+  </div>
+
+  <!-- RESEARCH -->
+  <div class="cs-wrap">
+    <div class="cs-section">
+      <span class="cs-section-label">Discovery</span>
+      <h2>Research</h2>
+      <p>I interviewed users on both sides of the integration - Jira administrators responsible for configuring the connector, and ServiceNow agents who would interact with synced tickets daily. I also ran a competitive analysis of existing Marketplace integrations to identify where similar tools fell short.</p>
+      <p>Three consistent themes emerged from the research:</p>
+      <p>1. Admins needed granular control over which fields sync and in which direction - a blanket two-way sync created conflicts and data loss in both systems.</p>
+      <p>2. End users on both platforms needed clear visual signals when a ticket was synced - they needed to know at a glance whether an update had already been shared with the other team.</p>
+      <p>3. Failure states were invisible in existing tools - when a sync failed silently, nobody knew until a meeting surfaced a discrepancy days later.</p>
+    </div>
+
+    <!-- FINDINGS -->
+    <div class="cs-section">
+      <span class="cs-section-label">What we learned</span>
+      <h2>Findings</h2>
+      <p>The research pointed to two types of problems: structural issues in how teams had to work, and confidence issues in the tools they were using.</p>
+
+      <div class="findings-grid">
+        <div class="finding-item">
+          <span class="finding-num">Hypothesis</span>
+          <h3>A configurable sync would reduce manual work</h3>
+          <p>If teams could define exactly which fields and statuses sync between platforms, they would no longer need to maintain parallel ticket workflows - freeing up time and reducing human error.</p>
+        </div>
+        <div class="finding-item">
+          <span class="finding-num">Challenge</span>
+          <h3>Complexity hidden in edge cases</h3>
+          <p>Every team had slightly different Jira and ServiceNow configurations. The integration had to handle custom fields, mismatched statuses, and conflicting updates without requiring users to understand the underlying logic.</p>
+        </div>
+        <div class="finding-item">
+          <span class="finding-num">01</span>
+          <h3>Two user groups, two mental models</h3>
+          <p>Jira admins thought in terms of projects and issue types. ServiceNow admins thought in tables and records. The configuration UI had to speak both languages without compromising either.</p>
+        </div>
+        <div class="finding-item">
+          <span class="finding-num">02</span>
+          <h3>Visibility builds trust</h3>
+          <p>Users didn't need real-time updates as much as they needed confidence that the sync had happened. A clear sync status indicator reduced support queries more than any speed improvement.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- USER STORIES -->
+    <div class="cs-section">
+      <span class="cs-section-label">Who we designed for</span>
+      <h2>User stories</h2>
+      <p>Three roles interacted with the integration in very different ways. The design had to serve all of them - without requiring any of them to understand how the other side of the system worked.</p>
+
+      <div class="stories-list">
+        <div class="story-item">
+          <span class="story-role">Jira Admin</span>
+          <span class="story-quote">I want to configure which Jira issue types and fields get synced to ServiceNow, so I can control what information crosses over without breaking our internal workflows.</span>
+        </div>
+        <div class="story-item">
+          <span class="story-role">Jira Admin</span>
+          <span class="story-quote">I don't want to manually update Jira tickets every time something changes in ServiceNow. It should sync automatically so I can always have accurate information without having to manage data entry.</span>
+        </div>
+        <div class="story-item">
+          <span class="story-role">Support Agent / End User</span>
+          <span class="story-quote">I just want to know if the ticket I'm looking at is already being tracked by the dev team. I shouldn't have to switch systems to find out.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- USER FLOW MAP -->
+  <div class="cs-wrap">
+    <div class="cs-section">
+      <span class="cs-section-label">Mapping the logic</span>
+      <h2>User flow map</h2>
+      <p>The business logic behind the sync was complex - issues could be created from either side, synced automatically or manually, and could hit multiple error states. I mapped the full decision tree to identify every path a ticket could take through the system before designing any UI screens.</p>
+      <p>This flow map became the foundation for both the admin configuration experience and the end-user status indicators. It helped the team align on edge cases early - before any of them became bugs in production.</p>
+    </div>
+  </div>
+  <div class="cs-wrap-wide" style="padding-bottom: 80px;">
+    <img src="cs-sn-flowmap.png" alt="User flow map" style="width:100%;border-radius:var(--radius);display:block;" />
+  </div>
+
+  <!-- USER INTERFACE -->
+  <div class="cs-grey-band" style="border-top: 1px solid var(--border);">
+    <div class="cs-wrap" style="padding-bottom: 56px;">
+      <div class="cs-section" style="border-top: none;">
+        <span class="cs-section-label">The solution</span>
+        <h2>User Interface</h2>
+        <p>The final design separated the experience into two distinct surfaces: an <strong>admin configuration panel</strong> for setting up the integration, and a <strong>sync status view</strong> embedded directly into Jira and ServiceNow issue pages.</p>
+        <p>The configuration panel walked admins through connection setup, field mapping, and sync direction - using a step-by-step flow that kept complexity manageable. The issue-level sync panel gave end users instant visibility into sync status, last updated time, and a direct link to the counterpart ticket in the other system.</p>
+      </div>
+    </div>
+    <div style="max-width:1100px;margin:0 auto;padding:0 56px;display:flex;flex-direction:column;gap:64px;">
+      <img src="cs-sn-ui-setup.png" alt="Connection setup" style="width:100%;border-radius:var(--radius);display:block;" />
+      <img src="cs-sn-ui-mapping.png" alt="Field mapping" style="width:100%;border-radius:var(--radius);display:block;" />
+      <img src="cs-sn-ui-rules.png" alt="Sync rules" style="width:100%;border-radius:var(--radius);display:block;" />
+      <img src="cs-sn-ui-status.png" alt="Issue sync status" style="width:100%;border-radius:var(--radius);display:block;" />
+      <img src="cs-sn-ui-log.png" alt="Sync activity log" style="width:100%;border-radius:var(--radius);display:block;" />
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="cs-wrap">
+    <div class="cs-section">
+      <span class="cs-section-label">Impact</span>
+      <h2>Results</h2>
+      <p>The integration launched on the Atlassian Marketplace and quickly became one of the go-to solutions for enterprises running both platforms. The configurable field mapping removed the biggest barrier to adoption - teams no longer had to accept a one-size-fits-all sync that broke their existing setups.</p>
+      <p>The sync status panel embedded in Jira issues proved especially valuable - it reduced the most common support request ("is this ticket in ServiceNow?") to a glance. Teams reported fewer cross-platform miscommunications and faster handoffs between engineering and support within the first quarter after launch.</p>
+    </div>
+
+    <!-- NEXT -->
+    <div class="cs-next">
+      <span class="cs-next-label">Next project</span>
+      <a href="case-study-myrequests.html">My Requests Extension -&gt;</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 Justyna Slusarz</p>
+    <p>Senior UX/UI Designer · Atlassian Marketplace</p>
+  </footer>
+
+</body>
+</html>

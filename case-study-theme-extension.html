@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Theme Extension – Justyna Ślusarz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #FFFFFF;
+      --bg-card: #F5F5F5;
+      --text:    #111111;
+      --muted:   #888888;
+      --border:  #E8E8E8;
+      --white:   #FFFFFF;
+      --radius:  10px;
+      --max:     800px;
+      --max-wide: 1100px;
+      --fs-body: 1.05rem;
+      --fs-lead: 1.2rem;
+      --fs-h2:   clamp(1.9rem, 3.5vw, 2.6rem);
+      --fs-h3:   1.25rem;
+      --fs-hero: clamp(2.8rem, 5vw, 4.2rem);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: var(--fs-body);
+      line-height: 1.75;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 56px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo a {
+      font-weight: 300;
+      font-size: 0.85rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.18em;
+      text-transform: lowercase;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+
+    nav a {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: opacity 0.2s;
+    }
+
+    nav a:hover { opacity: 0.5; }
+
+    .nav-contact {
+      background: var(--text);
+      color: var(--white) !important;
+      padding: 9px 22px;
+      border-radius: 100px;
+      opacity: 1 !important;
+    }
+
+    .nav-contact:hover {
+      background: #333 !important;
+      opacity: 1 !important;
+    }
+
+    /* ── CONTENT ── */
+    .cs-wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .cs-wrap-wide {
+      max-width: var(--max-wide);
+      margin: 0 auto;
+      padding: 0 56px;
+    }
+
+    /* ── HERO ── */
+    .cs-hero {
+      padding-top: 140px;
+      padding-bottom: 80px;
+    }
+
+    .cs-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .cs-hero h1 {
+      font-size: var(--fs-hero);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 28px;
+    }
+
+    .cs-hero-desc {
+      font-size: var(--fs-lead);
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 600px;
+      line-height: 1.8;
+      margin-bottom: 56px;
+    }
+
+    /* ── META ── */
+    .cs-meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 80px;
+    }
+
+    .cs-meta-item {
+      padding: 24px 0;
+      border-right: 1px solid var(--border);
+    }
+
+    .cs-meta-item:last-child { border-right: none; }
+
+    .cs-section .cs-meta { border-top: none; border-bottom: none; margin-bottom: 0; margin-top: 32px; }
+    .cs-section .cs-meta .cs-meta-item { padding: 14px 0; }
+
+    .cs-meta-label {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .cs-meta-value {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* ── IMAGE PLACEHOLDER ── */
+    .img-placeholder {
+      width: 100%;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+
+    .img-placeholder.hero-img { height: 480px; margin-bottom: 100px; }
+    .img-placeholder.full { height: 500px; }
+    .img-placeholder.medium { height: 380px; }
+    .img-placeholder.small { height: 280px; }
+
+    /* ── SECTIONS ── */
+    .cs-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .cs-section:first-of-type { border-top: none; }
+
+    .cs-section-label {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .cs-section h2 {
+      font-size: var(--fs-h2);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 32px;
+      color: var(--text);
+    }
+
+    .cs-section p {
+      font-size: var(--fs-body);
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.85;
+      margin-bottom: 20px;
+      max-width: 640px;
+    }
+
+    .cs-section p:last-child { margin-bottom: 0; }
+
+    .cs-section p strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    /* ── FINDINGS GRID ── */
+    .findings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-top: 48px;
+    }
+
+    .finding-item {
+      background: var(--bg);
+      padding: 36px;
+    }
+
+    .finding-num {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .finding-item h3 {
+      font-size: var(--fs-h3);
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .finding-item p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.7;
+      max-width: 100%;
+    }
+
+    /* ── PERSONAS ── */
+    .personas-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .persona-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 40px;
+    }
+
+    .persona-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 24px;
+      background: var(--border);
+    }
+
+    .persona-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .persona-story {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      color: var(--text);
+      font-weight: 300;
+      line-height: 1.75;
+      font-style: italic;
+    }
+
+    .persona-story::before {
+      content: '"';
+      font-size: 1.6rem;
+      font-weight: 900;
+      line-height: 0;
+      vertical-align: -0.3em;
+      margin-right: 4px;
+      color: var(--muted);
+    }
+
+    .persona-role {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .persona-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .persona-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    .persona-needs {
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+    }
+
+    .persona-needs-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .persona-needs ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .persona-needs li {
+      font-size: 0.92rem;
+      color: var(--text);
+      font-weight: 400;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .persona-needs li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--muted);
+    }
+
+    /* ── WIREFRAME ANNOTATED ── */
+    .wf-block {
+      margin-bottom: 60px;
+    }
+
+    .wf-block-label {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .wf-layout {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .wf-img {
+      width: 100%;
+      border-radius: var(--radius);
+      display: block;
+    }
+
+    .wf-annotations h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+      color: var(--text);
+    }
+
+    .wf-annotation-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .wf-annotation-list li {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .wf-arrow {
+      color: var(--muted);
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .wf-annotation-list span {
+      font-size: 0.95rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* ── IMAGE GRID ── */
+    .img-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    .img-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    /* ── NEXT PROJECT ── */
+    .cs-next {
+      padding: 100px 0 80px;
+      border-top: 1px solid var(--border);
+    }
+
+    .cs-next-label {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .cs-next a {
+      display: inline-block;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 2px solid var(--text);
+      padding-bottom: 4px;
+      transition: opacity 0.2s;
+    }
+
+    .cs-next a:hover { opacity: 0.5; }
+
+    /* ── UI STACK ── */
+    .ui-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .ui-figure {
+      margin: 0;
+    }
+
+    .ui-figure img {
+      width: 100%;
+      border-radius: var(--radius);
+      display: block;
+    }
+
+    .ui-figure figcaption {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 400;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    /* ── GREY BAND ── */
+    .cs-grey-band {
+      background: var(--bg-card);
+      width: 100%;
+      padding: 72px 0;
+    }
+    .cs-grey-band .cs-wrap-wide {
+      padding: 0 56px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text);
+      padding: 28px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p { font-size: 0.8rem; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; font-weight: 300; }
+
+    @media (max-width: 768px) {
+      header { padding: 0 24px; }
+      nav a:not(.nav-contact) { display: none; }
+      .cs-wrap { padding: 0 24px; }
+      .cs-wrap-wide { padding: 0 24px; }
+      .cs-grey-band .cs-wrap-wide { padding: 0 24px; }
+      .cs-grey-band { padding: 48px 0; }
+      .cs-meta { grid-template-columns: 1fr 1fr; }
+      .cs-meta-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .findings-grid { grid-template-columns: 1fr; }
+      .personas-grid { grid-template-columns: 1fr; }
+      .img-grid-2 { grid-template-columns: 1fr; }
+      .img-grid-3 { grid-template-columns: 1fr; }
+      footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo"><a href="index.html">justyna ślusarz</a></div>
+    <nav>
+      <a href="index.html#home">Home</a>
+      <a href="index.html#portfolio">Portfolio</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact" class="nav-contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <div class="cs-hero cs-wrap">
+    <span class="cs-eyebrow">App for Jira · UX/UI Design</span>
+    <h1>Theme Extension</h1>
+    <p class="cs-hero-desc">A personalization add-on for Jira Service Management that lets companies fully customize their customer portal to match their brand identity.</p>
+  </div>
+
+  <!-- HERO IMAGE -->
+  <div class="cs-wrap-wide" style="padding-bottom: 0;">
+    <img src="cs-theme-hero.png" alt="Theme Extension - hero" style="width:100%;border-radius:var(--radius);display:block;" />
+  </div>
+
+  <!-- ISSUE -->
+  <div class="cs-wrap">
+    <div class="cs-section">
+      <span class="cs-section-label">The problem</span>
+      <h2>Issue</h2>
+      <p>Companies using Jira Service Management had no way to customize the look of their customer portal. The out-of-the-box experience was generic and didn't reflect their brand - leading to lower trust from customers and a disconnect between the portal and the rest of the company's digital presence.</p>
+      <p>The existing Atlassian customization options were very limited: a logo and a single accent color. Larger organizations with strong brand guidelines needed <strong>full visual control</strong> - custom color schemes, fonts, background imagery, and the ability to create multiple themes for different teams or regions.</p>
+      <div class="cs-meta" style="margin-top: 48px;">
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Role</span>
+          <span class="cs-meta-value">Lead UX/UI Designer</span>
+        </div>
+        <div class="cs-meta-item" style="padding-left: 32px;">
+          <span class="cs-meta-label">Scope</span>
+          <span class="cs-meta-value">Research · UX · UI</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESEARCH -->
+    <div class="cs-section">
+      <span class="cs-section-label">Discovery</span>
+      <h2>Research</h2>
+      <p>I conducted interviews with IT administrators and service desk managers across mid-size and enterprise companies. I also analyzed competitor apps on the Atlassian Marketplace and reviewed customer feedback threads on the Atlassian Community forum to understand what users were asking for and what was missing in existing solutions.</p>
+      <p>The research covered <strong>user needs, technical constraints</strong> of the Jira platform, and the mental models of both the admins who configure the portal and the end users who interact with it daily.</p>
+    </div>
+
+    <!-- FINDINGS -->
+    <div class="cs-section">
+      <span class="cs-section-label">What we learned</span>
+      <h2>Findings</h2>
+      <p>The research revealed a clear gap between what Jira natively offered and what organizations actually needed for brand-aligned service portals.</p>
+
+      <div class="findings-grid">
+        <div class="finding-item">
+          <span class="finding-num">01</span>
+          <h3>Brand identity matters</h3>
+          <p>Most companies had established brand guidelines they were required to follow. A generic blue Jira portal felt misaligned and reduced user confidence in the tool.</p>
+        </div>
+        <div class="finding-item">
+          <span class="finding-num">02</span>
+          <h3>Admins need control without complexity</h3>
+          <p>IT administrators wanted to configure themes quickly without needing developer support. A theme builder had to be powerful yet approachable.</p>
+        </div>
+        <div class="finding-item">
+          <span class="finding-num">03</span>
+          <h3>Multiple themes, one platform</h3>
+          <p>Enterprise users often manage multiple service desks for different departments or brands - they needed the ability to save and switch between theme presets.</p>
+        </div>
+        <div class="finding-item">
+          <span class="finding-num">04</span>
+          <h3>End users notice design quality</h3>
+          <p>Employee and customer satisfaction with the help desk was directly tied to how polished and professional the portal looked - poor design led to more calls instead of self-service.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PERSONAS -->
+    <div class="cs-section">
+      <span class="cs-section-label">Who we designed for</span>
+      <h2>User personas</h2>
+      <p>Two distinct users interact with Theme Extension in fundamentally different ways - one configures, one consumes. The design had to serve both without compromising either.</p>
+
+      <div class="personas-grid">
+        <div class="persona-card">
+          <div class="persona-avatar"><img src="it.png" alt="IT Administrator" /></div>
+          <h3>The IT Administrator</h3>
+          <p>Responsible for managing Jira and all its apps across the organization. Technically confident but time-constrained - needs to set up and maintain themes with minimal overhead.</p>
+          <div class="persona-story">
+            I need to make our portal look like it belongs to our company — not like a default Jira page. But I can't spend days on it. It has to be quick, predictable, and I need to see the result before I publish anything.
+          </div>
+          <div class="persona-needs">
+            <span class="persona-needs-label">Key needs</span>
+            <ul>
+              <li>Quick setup with no coding required</li>
+              <li>Ability to preview changes before publishing</li>
+              <li>Save and reuse theme presets</li>
+              <li>Reliable, consistent output across portal views</li>
+            </ul>
+          </div>
+        </div>
+        <div class="persona-card">
+          <div class="persona-avatar"><img src="eu.png" alt="End User" /></div>
+          <h3>The End User</h3>
+          <p>An employee or external customer using the service portal to submit requests and track issues. Not aware of the tool behind the portal - just wants a clear, trustworthy experience.</p>
+          <div class="persona-story">
+            When I open the support portal, it should feel like part of our company — the same colors, the same logo. If it looks like a generic tool, I'm not sure I'm in the right place.
+          </div>
+          <div class="persona-needs">
+            <span class="persona-needs-label">Key needs</span>
+            <ul>
+              <li>Familiar visual identity matching the company brand</li>
+              <li>Clear, readable interface with good contrast</li>
+              <li>Consistent experience across portal sections</li>
+              <li>Quick access to the right request categories</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- WIREFRAMES — grey band obejmuje tekst + grafikę -->
+  <div class="cs-grey-band">
+    <div class="cs-wrap" style="padding-bottom: 56px;">
+      <div class="cs-section">
+        <span class="cs-section-label">Ideation</span>
+        <h2>Wireframes</h2>
+        <p>I started with low-fidelity wireframes to map out the two main surfaces: the admin theme builder and the themed customer portal. Early iterations explored how much control to expose to the admin without overwhelming them - the key design challenge was finding the right balance between flexibility and simplicity.</p>
+      </div>
+    </div>
+    <div class="cs-wrap-wide">
+      <div class="wf-block">
+        <span class="wf-block-label">Default Customer Portal wireframe</span>
+        <div class="wf-layout">
+          <img src="cs-theme-wf-portal.png" alt="Default Customer Portal wireframe" class="wf-img" />
+          <div class="wf-annotations">
+            <h4>What to change?</h4>
+            <ul class="wf-annotation-list">
+              <li><span class="wf-arrow">→</span><span>Flexible layout templates to accommodate diverse portal structures and content hierarchies.</span></li>
+              <li><span class="wf-arrow">→</span><span>Expanded branding controls — covering color schemes, typography, imagery and logo placement.</span></li>
+              <li><span class="wf-arrow">→</span><span>Ability to introduce custom UI components beyond native Jira Service Management elements.</span></li>
+              <li><span class="wf-arrow">→</span><span>A refreshed visual language aligned with contemporary product design standards.</span></li>
+              <li><span class="wf-arrow">→</span><span>Clearer information hierarchy and improved content visibility for end users.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKETCHES — białe tło, tekst + grafika razem -->
+  <div class="cs-wrap">
+    <div class="cs-section">
+      <span class="cs-section-label">Process</span>
+      <h2>Sketches &amp; iterations</h2>
+      <p>Before moving to high fidelity, I explored different approaches to the color picker, theme preview, and navigation structure through quick hand sketches and low-fi digital explorations. Several concepts were tested with stakeholders before settling on the final direction.</p>
+    </div>
+    <div style="padding-bottom: 80px;">
+      <img src="cs-theme-sketches.png" alt="Sketches & iterations" style="width:100%;border-radius:var(--radius);display:block;" />
+    </div>
+  </div>
+
+  <!-- FINAL UI — grey band obejmuje tekst + grafiki -->
+  <div class="cs-grey-band">
+    <div class="cs-wrap" style="padding-bottom: 56px;">
+      <div class="cs-section">
+        <span class="cs-section-label">The solution</span>
+        <h2>User Interface</h2>
+        <p>The final design delivered a fully branded customer portal experience powered by a clean, intuitive admin interface. Admins can configure color palettes, upload background images, set typography, and preview the result in real time before publishing.</p>
+        <p>The theme builder is built around <strong>visual presets and a live preview</strong> - reducing the configuration time from potentially hours of manual tweaking to a matter of minutes.</p>
+      </div>
+    </div>
+    <div class="cs-wrap-wide">
+      <div class="ui-stack">
+        <figure class="ui-figure">
+          <img src="cs-theme-ui-portal.png" alt="Card theme" />
+          <figcaption>Card theme</figcaption>
+        </figure>
+        <figure class="ui-figure">
+          <img src="cs-theme-ui-admin.png" alt="Text theme" />
+          <figcaption>Text theme</figcaption>
+        </figure>
+        <figure class="ui-figure">
+          <img src="cs-theme-ui-picker.png" alt="List theme" />
+          <figcaption>List theme</figcaption>
+        </figure>
+        <figure class="ui-figure">
+          <img src="cs-theme-ui-dark.png" alt="Mixed theme" />
+          <figcaption>Mixed theme</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="cs-wrap">
+    <div class="cs-section">
+      <span class="cs-section-label">Impact</span>
+      <h2>Results</h2>
+      <p>Theme Extension launched on the Atlassian Marketplace and gained traction quickly among enterprise customers who needed consistent brand experiences across their Jira portals. The self-service nature of the tool significantly reduced the IT workload associated with portal customization requests.</p>
+      <p>The clear admin interface and live preview feature were highlighted as the key differentiators in customer reviews - users praised how <strong>fast and intuitive</strong> the setup process was compared to manual CSS workarounds they had been using before.</p>
+    </div>
+
+    <!-- NEXT -->
+    <div class="cs-next">
+      <span class="cs-next-label">Next project</span>
+      <a href="case-study-bigpicture.html">BigPicture Onboarding →</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Justyna Ślusarz</p>
+    <p>Senior UX/UI Designer · Atlassian Marketplace</p>
+  </footer>
+
+</body>
+</html>

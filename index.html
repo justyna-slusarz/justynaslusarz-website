@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Justyna Slusarz - Senior UX/UI Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #FFFFFF;
+      --bg-card: #F5F5F5;
+      --text:    #111111;
+      --muted:   #888888;
+      --accent:  #111111;
+      --accent-h:#000000;
+      --border:  #E8E8E8;
+      --white:   #FFFFFF;
+      --radius:  10px;
+      --max:     1100px;
+
+      --fs-body:   1.05rem;
+      --fs-lead:   1.15rem;
+      --fs-h3:     1.3rem;
+      --fs-h2:     clamp(2.2rem, 4vw, 3.4rem);
+      --fs-hero:   clamp(3.5rem, 7vw, 6rem);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: var(--fs-body);
+      line-height: 1.7;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 56px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo a {
+      font-weight: 300;
+      font-size: 0.85rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.18em;
+      text-transform: capitalize;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+
+    nav a {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: opacity 0.2s;
+    }
+
+    nav a:hover { opacity: 0.5; }
+
+    .nav-contact {
+      background: var(--text);
+      color: var(--white) !important;
+      padding: 9px 22px;
+      border-radius: 100px;
+      transition: background 0.2s !important;
+      opacity: 1 !important;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-contact:hover {
+      background: #333 !important;
+      opacity: 1 !important;
+    }
+
+    .nav-contact-arrow {
+      width: 18px;
+      height: 18px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      line-height: 1;
+    }
+
+    /* ── SECTION WRAPPER ── */
+    .section-wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 120px 56px;
+    }
+
+    .section-label {
+      display: none;
+    }
+
+    .hero-eyebrow-label {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .section-title {
+      font-size: var(--fs-h2);
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 64px;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+    }
+
+    /* ── HOME ── */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 64px;
+    }
+
+    #home .section-wrap {
+      padding-top: 80px;
+      padding-bottom: 80px;
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+
+    .hero-eyebrow::before { display: none; }
+
+    .hero-headline {
+      font-size: var(--fs-hero);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      max-width: 900px;
+      margin-bottom: 40px;
+    }
+
+    .hero-headline .light {
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    .hero-sub {
+      font-size: var(--fs-lead);
+      color: var(--muted);
+      max-width: 460px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    /* ── HOW CAN I HELP ── */
+    .services-wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 80px 56px 140px;
+    }
+
+    .services-top {
+      margin-bottom: 64px;
+    }
+
+    .services-heading {
+      font-size: var(--fs-h2);
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+    }
+
+    .services-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .service-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 32px;
+      padding: 36px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .service-item:last-child {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .service-num {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      width: 28px;
+      flex-shrink: 0;
+      padding-top: 5px;
+    }
+
+    .service-body h3 {
+      font-size: var(--fs-h3);
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+
+    .service-body p {
+      font-size: var(--fs-body);
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    /* ── PORTFOLIO ── */
+    #portfolio {
+      border-top: 1px solid var(--border);
+    }
+
+    .portfolio-list {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .portfolio-card {
+      display: grid;
+      grid-template-columns: 486px 1fr;
+      height: 344px;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      text-decoration: none;
+      color: var(--text);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .portfolio-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.08);
+    }
+
+    .portfolio-img {
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 220px;
+    }
+
+    .portfolio-img svg { opacity: 0.3; }
+
+    .portfolio-info {
+      padding: 40px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .portfolio-tag { display: none; }
+
+    .portfolio-info h3 {
+      font-size: var(--fs-h3);
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .portfolio-info p {
+      font-size: var(--fs-body);
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 440px;
+      font-weight: 300;
+    }
+
+    .portfolio-link { display: none; }
+
+    /* ── ABOUT ── */
+    #about {
+      border-top: 1px solid var(--border);
+    }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 20px;
+      font-size: var(--fs-body);
+      line-height: 1.85;
+      font-weight: 300;
+    }
+
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-text strong { color: var(--text); font-weight: 700; }
+
+    /* ── CONTACT ── */
+    #contact {
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-inner {
+      max-width: 680px;
+    }
+
+    #contact h2 {
+      font-size: var(--fs-h2);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 20px;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .contact-sub {
+      color: var(--muted);
+      font-size: var(--fs-body);
+      margin-bottom: 52px;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      font-family: 'Lato', sans-serif;
+      font-size: var(--fs-body);
+      color: var(--text);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 18px;
+      outline: none;
+      transition: border-color 0.2s;
+      resize: none;
+      font-weight: 300;
+    }
+
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder { color: #BBBBBB; }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus { border-color: var(--text); }
+
+    .contact-form textarea { min-height: 140px; }
+
+    .form-submit {
+      align-self: flex-start;
+      background: var(--text);
+      color: var(--white);
+      border: none;
+      border-radius: 100px;
+      padding: 14px 32px;
+      font-family: 'Lato', sans-serif;
+      font-size: var(--fs-body);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .form-submit:hover { background: #333; }
+    .form-submit:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
+
+    .contact-also {
+      margin-top: 48px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .contact-also a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      transition: color 0.2s, border-color 0.2s;
+      letter-spacing: 0.01em;
+    }
+
+    .contact-also a:hover { color: var(--text); border-color: var(--text); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text);
+      padding: 28px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p { font-size: 0.8rem; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; font-weight: 300; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      header { padding: 0 24px; }
+      nav a:not(.nav-contact) { display: none; }
+
+      .section-wrap { padding: 80px 24px; }
+      .services-wrap { padding: 0 24px 80px; }
+
+      .portfolio-card { grid-template-columns: 1fr; }
+      .portfolio-img { min-height: 180px; }
+
+      .about-inner { grid-template-columns: 1fr; }
+
+      .form-row { grid-template-columns: 1fr; }
+      footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo"><a href="#home">justyna ślusarz</a></div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#about">About</a>
+      <a href="#contact" class="nav-contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- HOME -->
+  <section id="home">
+    <div class="section-wrap">
+      <div class="hero-eyebrow">UX / UI Designer · Atlassian Marketplace</div>
+      <h1 class="hero-headline">
+        I design Jira apps<br />
+        <span class="light">that people</span><br />
+        actually want to use.
+      </h1>
+      <p class="hero-sub">
+        Helping Atlassian Marketplace vendors turn complex functionality into clear, intuitive experiences - from early ideas to polished products.
+      </p>
+    </div>
+  </section>
+
+  <!-- HOW CAN I HELP -->
+  <div class="services-wrap">
+    <div class="services-top">
+      <span class="section-label">What I do</span>
+      <h2 class="services-heading">How can I help?</h2>
+    </div>
+    <div class="services-list">
+
+      <div class="service-item">
+        <div class="service-num">01</div>
+        <div class="service-body">
+          <h3>UX Audit &amp; Improvements</h3>
+          <p>A focused review of your app to identify usability issues, friction points, and quick wins - with clear, actionable recommendations that don't require a full redesign.</p>
+        </div>
+      </div>
+
+      <div class="service-item">
+        <div class="service-num">02</div>
+        <div class="service-body">
+          <h3>UX Design for New Features or Apps</h3>
+          <p>From early concepts to structured, user-friendly solutions. I translate complex requirements into clear flows and intuitive interfaces that scale with your product.</p>
+        </div>
+      </div>
+
+      <div class="service-item">
+        <div class="service-num">03</div>
+        <div class="service-body">
+          <h3>UX Redesign &amp; Product Improvements</h3>
+          <p>Improving existing products by simplifying workflows, restructuring interfaces, and making features easier to use - without disrupting what already works.</p>
+        </div>
+      </div>
+
+      <div class="service-item">
+        <div class="service-num">04</div>
+        <div class="service-body">
+          <h3>Ongoing UX Support</h3>
+          <p>Continuous design support for teams without a dedicated designer - reviewing new features, maintaining consistency, and evolving the product experience over time.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MY WORK -->
+  <section id="portfolio">
+    <div class="section-wrap">
+      <span class="section-label">Selected projects</span>
+      <h2 class="section-title">My Work</h2>
+      <div class="portfolio-list">
+
+        <a href="case-study-theme-extension.html" class="portfolio-card">
+          <div class="portfolio-img" style="background: #EBEBEE; padding: 24px;">
+            <img src="img-theme-extension.png" alt="Theme Extension" style="width:100%;height:100%;object-fit:contain;" />
+          </div>
+          <div class="portfolio-info">
+            <div class="portfolio-tag">Jira App · UI Design</div>
+            <h3>Theme Extension</h3>
+            <p>Personalization add-on for Jira that enables teams to customize their customer portal - improving brand consistency and user satisfaction.</p>
+            <span class="portfolio-link">↗</span>
+          </div>
+        </a>
+
+        <a href="case-study-bigpicture.html" class="portfolio-card">
+          <div class="portfolio-img" style="padding:0;overflow:hidden;">
+            <img src="onboard.png" alt="BigPicture Onboarding" style="width:100%;height:100%;object-fit:cover;" />
+          </div>
+          <div class="portfolio-info">
+            <div class="portfolio-tag">Jira App · UX Design</div>
+            <h3>BigPicture Onboarding</h3>
+            <p>First-time user onboarding redesigned to reduce friction and speed up activation - helping new users reach value faster.</p>
+            <span class="portfolio-link">↗</span>
+          </div>
+        </a>
+
+        <a href="case-study-servicenow.html" class="portfolio-card">
+          <div class="portfolio-img" style="padding:0;overflow:hidden;">
+            <img src="service.png" alt="Jira x ServiceNow Sync" style="width:100%;height:100%;object-fit:cover;" />
+          </div>
+          <div class="portfolio-info">
+            <div class="portfolio-tag">Integration · UX Design</div>
+            <h3>Jira x ServiceNow Sync</h3>
+            <p>Cross-platform issue sync experience connecting two enterprise ecosystems - simplifying complex workflows for operations teams.</p>
+            <span class="portfolio-link">↗</span>
+          </div>
+        </a>
+
+        <a href="case-study-my-requests.html" class="portfolio-card">
+          <div class="portfolio-img" style="padding:0;overflow:hidden;">
+            <img src="img-my-requests.png" alt="My Requests Extension" style="width:115%;height:115%;object-fit:cover;margin:-7.5%;" />
+          </div>
+          <div class="portfolio-info">
+            <div class="portfolio-tag">Jira App · UX &amp; UI Design</div>
+            <h3>My Requests Extension</h3>
+            <p>Redesigned request management experience for Jira Service Management - making it easier for users to track and manage their own requests.</p>
+            <span class="portfolio-link">↗</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-wrap">
+      <span class="section-label">Background</span>
+      <h2 class="section-title">About me</h2>
+      <div class="about-inner">
+        <div class="about-text">
+          <p>I'm a <strong>Senior UX/UI Designer</strong> with over 8 years of experience in the Atlassian Marketplace ecosystem. I specialise in products with complex workflows - helping teams simplify functionality without sacrificing power.</p>
+          <p>I've worked with vendors on apps used by thousands of teams, contributing to products like <strong>Extension for Jira Service Management</strong> and <strong>BigPicture</strong>, and supporting teams at companies including <strong>Deviniti</strong> and <strong>Appfire</strong>.</p>
+          <p>Based in Poland, working with teams internationally.</p>
+        </div>
+        <div style="width:300px;height:300px;border-radius:50%;overflow:hidden;flex-shrink:0;">
+          <img src="ja2_cool.jpeg" alt="Justyna Slusarz" style="width:100%;height:100%;object-fit:cover;object-position:center 15%;" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-wrap">
+      <div class="contact-inner">
+        <span class="section-label">Get in touch</span>
+        <h2>Let's work together</h2>
+        <p class="contact-sub">Whether you're building a new app, improving an existing product, or looking for ongoing UX support - I'd love to hear about your project.</p>
+        <form class="contact-form" onsubmit="return false;" id="contactForm">
+          <div class="form-row">
+            <input type="text" id="fname" placeholder="Your name" oninput="checkForm()" />
+            <input type="email" id="femail" placeholder="Your email" oninput="checkForm()" />
+          </div>
+          <textarea id="fmessage" placeholder="Tell me about your project..." oninput="checkForm()"></textarea>
+          <button type="submit" class="form-submit" id="fsubmit" disabled>Send message</button>
+        </form>
+        <script>
+          function checkForm() {
+            const name = document.getElementById('fname').value.trim();
+            const email = document.getElementById('femail').value.trim();
+            const msg = document.getElementById('fmessage').value.trim();
+            document.getElementById('fsubmit').disabled = !(name && email && msg);
+          }
+        </script>
+        <div class="contact-also">
+          <a href="mailto:justynaslusarz.ux@gmail.com">✉ justynaslusarz.ux@gmail.com</a>
+          <a href="https://www.linkedin.com/in/justyna-slusarz" target="_blank" rel="noopener">in LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Justyna Ślusarz</p>
+    <p>Senior UX/UI Designer · Atlassian Marketplace</p>
+  </footer>
+
+</body>
+</html>
